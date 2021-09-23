@@ -15,6 +15,10 @@ class App extends React.Component {
           sentimentOutput:[],
           sentiment:true
         }
+
+  componentDidMount() {
+    document.title = "Sentiment Analyzer";  
+  }  
   
   /*
   This method returns the component based on what the input mode is.
@@ -45,13 +49,14 @@ class App extends React.Component {
 
     fetch(url).then((response)=>{
         response.json().then((data)=>{
+        console.log(data);
         this.setState({sentimentOutput:data.label});
         let output = data.label;
         let color = "white"
         switch(output) {
-          case "positive": color = "black";break;
-          case "negative": color = "black";break;
-          default: color = "black";
+          case "positive": color = "green";break;
+          case "negative": color = "red";break;
+          default: color = "yellow";
         }
         output = <div style={{color:color,fontSize:20}}>{output}</div>
         this.setState({sentimentOutput:output});
@@ -67,6 +72,7 @@ class App extends React.Component {
 
     fetch(url).then((response)=>{
       response.json().then((data)=>{
+      console.log(data);    
       this.setState({sentimentOutput:<EmotionTable emotions={data}/>});
   })})  ;
   }
